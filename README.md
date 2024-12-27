@@ -1,9 +1,9 @@
 <h1 align="center">Scratches</h1>
 
 <p align="center">
-Scratches is a project that is inspired by the "Deep Learning from Scratch"
+Scratches is a project that is inspired by the «Deep Learning from Scratch»
 book by Seth Weidman, which provides a comprehensive guide to creating deep
-learning models from scratch using Python and NumPy. The project aims to provide
+learning models from scratch using Python, NumPy and SciPy. The project aims to provide
 pure Python and NumPy implementations of classic machine learning algorithms
 such as k-nearest neighbors, linear and multiple regressions, and elementary and
 convolutional neural networks.
@@ -28,7 +28,7 @@ source .venv/bin/activate
 uv pip install .
 uv sync examples
 ```
-Although NumPy is a crucial dependency for the functioning of the algorithms,
+Although NumPy and SciPy are crucial dependencies for the functioning of the algorithms,
 Jupiter, Matplotlib, and Pandas are also present in the environment in order to
 provide a seamless experience.
 
