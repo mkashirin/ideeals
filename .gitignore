@@ -1,0 +1,8 @@
+# Python/Jupyter generated files
+.ipynb_checkpoints
+.jupyter
+.virtual_documents
+__pycache__
+
+# Full sized datasets
+examples/datasets/*.csv

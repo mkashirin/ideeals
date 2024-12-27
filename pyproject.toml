@@ -1,0 +1,28 @@
+[build-system]
+requires = ["hatchling"]
+build-backend = "hatchling.build"
+
+[tool.hatch.build]
+packages = ["scratches"]
+include = ["examples"]
+
+[project]
+name = "scratches"
+version = "1.0.0"
+description = "Comprehensive guide to creating deep learning models from scratch using Python and NumPy."
+readme = "README.md"
+requires-python = ">=3.12"
+dependencies = [
+    "numpy>=2.2.1",
+    "scipy>=1.14.1",
+]
+
+[dependency-groups]
+examples = [
+    "jupyter>=1.1.1",
+    "matplotlib>=3.10.0",
+    "pandas>=2.2.3",
+]
+dev = [
+    "ruff>=0.8.4",
+]
