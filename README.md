@@ -18,27 +18,28 @@ Miniconda to manage your Python packages.
 
 Use the Git command-line interface (CLI) to clone this repository into your
 working directory using the following command:
-```bash
+```shell
 git clone https://github.com/mkashirin/scratches
 ```
 To create a virtual environment, please follow the lines below:
-```bash
-conda init
-conda env create --file="environment.yml" --name="scratches"
-conda activate scratches
+```shell
+uv venv .venv
+source .venv/bin/activate
+uv pip install .
+uv sync examples
 ```
 Although NumPy is a crucial dependency for the functioning of the algorithms,
 Jupiter, Matplotlib, and Pandas are also present in the environment in order to
 provide a seamless experience.
 
-If you wish to change the default path for your environment, you can edit the
-"prefix" value in the "environment.yml" file (the default location is
-"~/anaconda3/envs/scratches").
-
 After that You can just run the Jupyter sever to access the notebooks from the
 **examples** directory by executing the following command:
-```bash
+```shell
 jupyter lab
+```
+Or open the project in VSCode:
+```shell
+code .
 ```
 And that's it. You are all set!
 
