@@ -94,7 +94,6 @@ class LinearRegressionManualModel(BaseManualModel):
             else (self._get_weights(n_features=self.x_train.shape[1]))
         )
         self._permute_data()
-
         for _ in range(n_iterations):
             # Getting a batch
             if batch_start >= self.x_train.shape[0]:
@@ -160,7 +159,7 @@ class LinearRegressionManualModel(BaseManualModel):
         batch_size: int,
         batch_start: int = 0,
     ) -> SamplesBatch:
-        """Generate a batch for training starting from the 
+        """Generate a batch for training starting from the
         :parameter:`batch_start` position.
         """
         if batch_start + batch_size > x_train.shape[0]:

@@ -29,7 +29,7 @@ class KNNClassificationManualModel(BaseManualModel):
             :type y_train: :class:`ndarray`
 
         :raises ValueError: If `x` and `y` do not pass validation conditions,
-        expressed in :method:`_validate_shapes()` method of the 
+        expressed in :method:`_validate_shapes()` method of the
         :class:`BaseManualModel` class.
         """
         super().fit(x_train, y_train)
@@ -63,8 +63,8 @@ class KNNClassificationManualModel(BaseManualModel):
 
         if weight_map is not None and len(weight_map) != n_neighbors:
             message = (
-                f"The number of weights in `weight_map` and the number "
-                f"`n_neighbors` must be the same"
+                "The number of weights in `weight_map` and the number "
+                "`n_neighbors` must be the same"
             )
             raise ValueError(message)
         predicting_start_time = perf_counter()
@@ -108,7 +108,7 @@ class KNNClassificationManualModel(BaseManualModel):
 
     @staticmethod
     def _compute_with_one_loop(x_train: ndarray, x_test: ndarray) -> ndarray:
-        """Compute the Euclidean distances between data points using 
+        """Compute the Euclidean distances between data points using
         one loop.
         """
         n_test_samples = x_test.shape[0]
