@@ -82,7 +82,6 @@ class Trainer:
 
         training_start_time = perf_counter()
         for epoch in range(epochs):
-
             if not (epoch + 1) % evaluate_every_epochs:
                 last_evaluated_model = deepcopy(self.network)
 
@@ -96,7 +95,7 @@ class Trainer:
                     self.y_valid, predicted
                 )
 
-                if valid_loss < self.best_loss or stop_early != True:
+                if valid_loss < self.best_loss or not stop_early:
                     self.best_loss = valid_loss
                     info(
                         f"Validation loss after {epoch + 1} "
@@ -108,7 +107,7 @@ class Trainer:
                     f"{valid_loss}. Stopping training early..."
                 )
                 self.best_loss = valid_loss
-                self.network = last_evaluated_model  # pyright: ignore[reportPossiblyUnboundVariable]
+                self.network = last_evaluated_model  # type: ignore
                 self.optimizer.network = self.network
                 break
 
@@ -122,7 +121,7 @@ class Trainer:
         permutation = np.random.permutation(self.x_train.shape[0])
         # fmt: off
         self.x_train, self.y_train = (
-            self.x_train[permutation], self.y_train[permutation],
+            self.x_train[permutation], self.y_train[permutation]
         )
         # fmt: on
 
@@ -134,7 +133,7 @@ class Trainer:
             batch_end = i + batch_size
             # fmt: off
             x_batch, y_batch = (
-                self.x_train[i:batch_end], self.y_train[i:batch_end],
+                self.x_train[i:batch_end], self.y_train[i:batch_end]
             )
             # fmt: on
             yield x_batch, y_batch

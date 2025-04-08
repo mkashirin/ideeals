@@ -184,7 +184,8 @@ class KNNClassificationManualModel(BaseManualModel):
             if weight_map is not None:
                 closest_neighbors = closest_neighbors.tolist()
                 closest_neighbors = self._weigh_neighbors(
-                    closest_neighbors, weight_map
+                    closest_neighbors,  # type: ignore
+                    weight_map,
                 )
 
             y_predicted[i] = mode(closest_neighbors)[0]

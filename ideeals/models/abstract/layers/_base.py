@@ -1,5 +1,3 @@
-# pyright: reportAttributeAccessIssue = false
-
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Union
 
@@ -101,7 +99,7 @@ class BaseLayer(ABC):
             self.operators.keys(), self.operators.values()
         ):
             if issubclass(type(operator), ParameterizedOperator):
-                self.parameters[key] = operator.parameter
+                self.parameters[key] = operator.parameter  # type: ignore
 
     def _get_scale(self, n_features: int) -> float:
         match self.weight_initialization:

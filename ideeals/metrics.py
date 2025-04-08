@@ -4,7 +4,7 @@ from typing import Any, Optional
 import numpy as np
 from numpy import ndarray
 
-from ..._typing import ConfusionMatrix, IndicesMap
+from ._typing import ConfusionMatrix, IndicesMap
 
 
 def compute_mean_absolute_error(actual: ndarray, predicted: ndarray) -> float:
@@ -18,7 +18,7 @@ def compute_mean_absolute_error(actual: ndarray, predicted: ndarray) -> float:
     :return: Mean absolute error of the model.
         :rtype: :class:`float`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
     error = float(np.mean(np.abs(actual - predicted)))
@@ -37,7 +37,7 @@ def compute_mean_squared_error(actual: ndarray, predicted: ndarray) -> float:
     :return: Mean squared error of the model.
         :rtype: :class:`float`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
     error = float(np.mean(np.power(actual - predicted, 2)))
@@ -58,7 +58,7 @@ def compute_root_mean_squared_error(
     :returns: Root of mean squared error of the model.
         :rtype: :class:`float`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
     error = np.sqrt(compute_mean_squared_error(actual, predicted))
@@ -76,7 +76,7 @@ def compute_accuracy(actual: ndarray, predicted: ndarray) -> float:
     :returns: Accuracy score of the model (% of correct predictions).
         :rtype: :class:`float`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
     accuracy = np.sum(predicted == actual) / len(actual)
@@ -104,7 +104,7 @@ def compute_confusion_matrix(
     matrix alignment.
         :rtype: :class:`ConfusionMatrix`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
 
@@ -158,7 +158,7 @@ def compute_sensitivities_and_specificities(
     specificities (depends on :parameter:`as_array`).
         :rtype: :class:`Any`
 
-    :raises ValueError: If actual and predicted arrays have 
+    :raises ValueError: If actual and predicted arrays have
     non-broadcasting shapes.
     """
 

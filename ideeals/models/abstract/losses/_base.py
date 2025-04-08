@@ -4,7 +4,7 @@ from typing import Any
 from numpy import ndarray
 
 
-class BaseEvaluator(ABC):
+class BaseLoss(ABC):
     """Abstract base class for defining loss functions used in neural
     networks.
     """

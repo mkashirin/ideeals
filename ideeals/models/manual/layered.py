@@ -1,12 +1,10 @@
-# pyright: reportArgumentType = false
-
-# The class built here (LayeredRegressionManualModel) is just pure
-# boilerplate, that mean to show how You should never do. Overcomplicated
-# computational process demonstrates the amount of work that needs to be
-# done for gradient descent to work properly when hard-coded.
-# Thus, the manual class solution is not always the best.
-# More abstract concepts and approaches are built within
-# the **abstract** module.
+# The class built here (LayeredRegressionManualModel) is just pure boilerplate,
+# that mean to show how You should never do. Overcomplicated computational
+# process demonstrates the amount of work that needs to be done for gradient
+# descent to work properly when hard-coded.
+#
+# Thus, the manual class solution is not always the best. More abstract
+# concepts and approaches are built within the **abstract** module.
 
 
 from typing import Any, Dict, Optional
@@ -15,7 +13,7 @@ import numpy as np
 from numpy import ndarray
 
 from .linear import LinearRegressionManualModel
-from ..evaluation.metrics import compute_mean_squared_error
+from ...metrics import compute_mean_squared_error
 from ..._typing import WeightsMap, ComputationalMetadata
 
 
@@ -36,10 +34,10 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         learning_rate: float = 0.001,
         batch_size: int = 100,
         random_seed: Optional[int] = None,
-        **kwargs
+        **kwargs,
     ) -> Any:
-        """Train a layered regression model for a specified number of 
-        iterations using gradient descent to adjust the curve. There is 
+        """Train a layered regression model for a specified number of
+        iterations using gradient descent to adjust the curve. There is
         also a possibility to change the number of neurons in hidden layer by
         passing additional :keyword:`hidden_size` keyword argument.
 
@@ -64,7 +62,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
             :type hidden_size: :class:`int`
 
         :returns: Training statistics if :data:`True` is passed to one of the
-        :keyword:`keep_loss` or :keyword:`keep_weights`, :data:`None` 
+        :keyword:`keep_loss` or :keyword:`keep_weights`, :data:`None`
         otherwise.
             :rtype: :class:`Any`
 
@@ -78,7 +76,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
             learning_rate=learning_rate,
             batch_size=batch_size,
             random_seed=random_seed,
-            **kwargs
+            **kwargs,
         )
 
     def predict(self, x_test: ndarray) -> ndarray:
@@ -115,12 +113,14 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
             else input_size
         )
 
-        input_weights, input_bias = np.random.randn(
-            input_size, hidden_size
-        ), np.random.randn(1, hidden_size)
-        hidden_weights, hidden_bias = np.random.randn(
-            hidden_size, 1
-        ), np.random.randn(1, 1)
+        input_weights, input_bias = (
+            np.random.randn(input_size, hidden_size),  # type: ignore
+            np.random.randn(1, hidden_size),  # type: ignore
+        )
+        hidden_weights, hidden_bias = (
+            np.random.randn(hidden_size, 1),  # type: ignore
+            np.random.randn(1, 1),
+        )
         self.weights_map_: WeightsMap = {
             "input_weights": input_weights,
             "input_bias": input_bias,
@@ -131,7 +131,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
     def _feed_forward(
         self, x_batch: ndarray, y_batch: ndarray
     ) -> ComputationalMetadata:
-        """Make predictions and calculate loss for a linear regression 
+        """Make predictions and calculate loss for a linear regression
         model.
         """
         input_product = np.dot(x_batch, self.weights_map_["input_weights"])

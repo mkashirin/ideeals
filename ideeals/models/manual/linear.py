@@ -1,5 +1,3 @@
-# pyright: reportArgumentType = false
-
 from logging import info
 from time import perf_counter
 from typing import Dict, Optional
@@ -10,7 +8,7 @@ from numpy import ndarray
 from ._base import BaseManualModel
 from ..._typing import ComputationalMetadata, SamplesBatch, WeightsMap
 from ...algebra import LeastSquaresSolver
-from ..evaluation.metrics import compute_mean_squared_error
+from ...metrics import compute_mean_squared_error
 
 
 class LinearRegressionManualModel(BaseManualModel):
@@ -115,21 +113,20 @@ class LinearRegressionManualModel(BaseManualModel):
             if best_setting is None:
                 best_setting = computational_metadata
             elif (
-                best_setting["loss"]
-                > loss_data  # pyright: ignore[reportOperatorIssue]
+                best_setting["loss"] > loss_data  # type: ignore
             ):
                 best_setting = computational_metadata
             self.loss_values_.append(loss_data)
 
             # Adjusting weights with respect to learning rate and
             # loss gradients
-            loss_gradients = self._propagate_backwards(computational_meta)
+            loss_gradients = self._propagate_backwards(computational_meta)  # type: ignore
             for key in self.weights_map_.keys():
                 self.weights_map_[key] -= learning_rate * loss_gradients[key]
 
         if best_setting is not None:
             self.weights_map_ = best_setting[
-                "weights"  # pyright: ignore[reportAttributeAccessIssue]
+                "weights"  # type: ignore
             ]
 
             fitting_end_time = perf_counter()
@@ -166,10 +163,11 @@ class LinearRegressionManualModel(BaseManualModel):
             batch_size = x_train.shape[0] - batch_start
         batch_end = batch_start + batch_size
 
+        # fmt: off
         x_batch, y_batch = (
-            x_train[batch_start:batch_end],
-            y_train[batch_start:batch_end],
+            x_train[batch_start:batch_end], y_train[batch_start:batch_end]
         )
+        # fmt: on
         sample_batch: SamplesBatch = x_batch, y_batch
 
         return sample_batch
@@ -241,7 +239,7 @@ class LinearRegressionManualModel(BaseManualModel):
 
         return loss_gradients
 
-    def _solve_algebraicaly(self, round_to: int) -> None:
+    def _solve_algebraicaly(self, round_to: Optional[int] = None) -> None:
         solver = LeastSquaresSolver()
         solver.fit(self.x_train, self.y_train)
         if round_to is None:

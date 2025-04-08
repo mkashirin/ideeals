@@ -3,7 +3,7 @@ from numpy import ndarray
 from typing import Dict, Optional
 
 from ..layers._base import BaseLayer
-from ..evaluators._base import BaseEvaluator
+from ..losses._base import BaseLoss
 
 
 class NeuralNetwork:
@@ -12,9 +12,9 @@ class NeuralNetwork:
     def __init__(
         self,
         layers: Dict[str, BaseLayer],
-        loss_function: BaseEvaluator,
+        loss_function: BaseLoss,
         *,
-        random_seed: Optional[int] = None
+        random_seed: Optional[int] = None,
     ) -> None:
         """Initialize the NeuralNetwork with layers, loss function, and an
         optional random seed.
@@ -62,7 +62,7 @@ class NeuralNetwork:
         for layer in reversed(self.layers.values()):
             gradient = layer.propagate_backwards(gradient)
 
-    def train(self, x_batch: ndarray, y_batch: ndarray) -> float:
+    def train(self, xbatch: ndarray, ybatch: ndarray) -> float:
         """Trains the neural network on the input batch and returns the
         loss value.
 
@@ -74,8 +74,8 @@ class NeuralNetwork:
         :returns: The loss value after training
             :rtype: :class:`float`
         """
-        predicted = self.feed_forward(x_batch)
-        loss_value = self.loss_function.feed_forward(y_batch, predicted)
+        predicted = self.feed_forward(xbatch)
+        loss_value = self.loss_function.feed_forward(ybatch, predicted)
         self.propagate_backwards(self.loss_function.propagate_backwards())
 
         return loss_value

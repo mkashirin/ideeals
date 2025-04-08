@@ -4,10 +4,10 @@ import numpy as np
 from numpy import ndarray
 from scipy.special import logsumexp
 
-from ._base import BaseEvaluator
+from ._base import BaseLoss
 
 
-class MSEEvaluator(BaseEvaluator):
+class MSELoss(BaseLoss):
     """Class for defining the Mean Squared Error loss function as an
     evaluator.
     """
@@ -35,7 +35,7 @@ class MSEEvaluator(BaseEvaluator):
         return self.input_gradient
 
 
-class SoftmaxCEEvaluator(BaseEvaluator):
+class SoftmaxCELoss(BaseLoss):
     """Class for defining the Softmax Cross Entropy loss function as an
     evaluator.
     """
@@ -68,9 +68,10 @@ class SoftmaxCEEvaluator(BaseEvaluator):
             self.single_class = True
 
         if self.single_class:
-            self.actual, self.predicted = self.normalize(
-                self.actual
-            ), self.normalize(self.predicted)
+            self.actual, self.predicted = (
+                self.normalize(self.actual),
+                self.normalize(self.predicted),
+            )
 
         softmax_predicted = self.softmax(self.predicted, axis=0)
         self.softmax_predicted = np.clip(
