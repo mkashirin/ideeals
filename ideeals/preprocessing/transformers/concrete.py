@@ -1,12 +1,10 @@
 from typing import Any
 
 import numpy as np
-from numpy import ndarray
-
-
-from ._base import BasePreprocessor
+from numpy.typing import NDArray
 
 from ..._typing import StrategyOption
+from ._base import BasePreprocessor
 
 
 class ImputingPreprocessor(BasePreprocessor):
@@ -15,15 +13,15 @@ class ImputingPreprocessor(BasePreprocessor):
     """
 
     def __init__(
-        self, 
-        strategy: StrategyOption = "mean", 
+        self,
+        strategy: StrategyOption = "mean",
         copy: bool = True,
     ) -> None:
         super().__init__(copy)
         self.strategy = strategy
         self.fillers: Any
 
-    def fit(self, x: ndarray, fill_with: Any = None) -> None:
+    def fit(self, x: NDArray, fill_with: Any = None) -> None:
         """Fit the preprocessor on the given x and compute the specified
         statistics for each feature.
 
@@ -53,7 +51,7 @@ class ImputingPreprocessor(BasePreprocessor):
 
                 raise ValueError(message)
 
-    def transform(self, x: ndarray) -> ndarray:
+    def transform(self, x: NDArray) -> NDArray:
         """Transform the input features using statistics, calculated with the
         :method:`fit()` method.
 
@@ -71,7 +69,7 @@ class ImputingPreprocessor(BasePreprocessor):
         x[nan_mask] = np.take(self.fillers, np.where(nan_mask)[1])
         return x
 
-    def fit_transform(self, x) -> ndarray:
+    def fit_transform(self, x) -> NDArray:
         """Fit and transform at the same time."""
 
         self.fit(x)
@@ -85,10 +83,10 @@ class MMScalingPreprocessor(BasePreprocessor):
 
     def __init__(self, copy: bool = True) -> None:
         super().__init__(copy)
-        self.min_values: ndarray
-        self.max_values: ndarray
+        self.min_values: NDArray
+        self.max_values: NDArray
 
-    def fit(self, x: ndarray) -> None:
+    def fit(self, x: NDArray) -> None:
         """Fit the preprocessor to the input x and computes the (min, max)
         boundaries for each feature.
 
@@ -102,7 +100,7 @@ class MMScalingPreprocessor(BasePreprocessor):
         self.min_values = np.nanmin(x, axis=0)
         self.max_values = np.nanmax(x, axis=0)
 
-    def transform(self, x: ndarray) -> ndarray:
+    def transform(self, x: NDArray) -> NDArray:
         """Transform the input features and scale the data according to the
         computed boundaries.
 
@@ -116,7 +114,9 @@ class MMScalingPreprocessor(BasePreprocessor):
             x = x.copy()
 
         range_values = self.max_values - self.min_values
-        (nonzero_range_mask, zero_range_mask) = self._get_values_masks(range_values)
+        (nonzero_range_mask, zero_range_mask) = self._get_values_masks(
+            range_values
+        )
         x[:, zero_range_mask] = 0
 
         x[:, nonzero_range_mask] = (
@@ -128,7 +128,7 @@ class MMScalingPreprocessor(BasePreprocessor):
         )
         return x
 
-    def fit_transform(self, x) -> ndarray:
+    def fit_transform(self, x) -> NDArray:
         """Fit and transform at the same time."""
 
         self.fit(x)
@@ -142,10 +142,10 @@ class ZScalingPreprocessor(BasePreprocessor):
 
     def __init__(self, copy: bool = True) -> None:
         super().__init__(copy)
-        self.means: ndarray
-        self.stds: ndarray
+        self.means: NDArray
+        self.stds: NDArray
 
-    def fit(self, x: ndarray) -> None:
+    def fit(self, x: NDArray) -> None:
         """Fit the preprocessor to the input x and computes the mean and
         standard deviation for each feature.
 
@@ -156,7 +156,7 @@ class ZScalingPreprocessor(BasePreprocessor):
         self.means = np.nanmean(x, axis=0)
         self.stds = np.nanstd(x, axis=0)
 
-    def transform(self, x: ndarray) -> ndarray:
+    def transform(self, x: NDArray) -> NDArray:
         """Transform the input features and standard scale the data according
         to the computed mean and standard deviation.
 
@@ -178,7 +178,7 @@ class ZScalingPreprocessor(BasePreprocessor):
         ) / self.stds[nonzero_std_mask]
         return x
 
-    def fit_transform(self, x) -> ndarray:
+    def fit_transform(self, x) -> NDArray:
         """Fit and transform at the same time."""
 
         self.fit(x)

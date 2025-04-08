@@ -5,7 +5,7 @@ from typing import Any, Generator, Optional, Tuple
 from sys import float_info
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from .network import NeuralNetwork
 from ..optimizers._base import BaseOptimizer
@@ -21,18 +21,18 @@ class Trainer:
         self.optimizer = optimizer
         self.best_loss = float_info.max
         self.optimizer.network = network
-        self.x_train: ndarray
-        self.x_valid: ndarray
-        self.y_train: ndarray
-        self.y_valid: ndarray
+        self.x_train: NDArray
+        self.x_valid: NDArray
+        self.y_train: NDArray
+        self.y_valid: NDArray
         basicConfig(format="Trainer: %(message)s", level=INFO)
 
     def fit(
         self,
-        x_train: ndarray,
-        x_valid: ndarray,
-        y_train: ndarray,
-        y_valid: ndarray,
+        x_train: NDArray,
+        x_valid: NDArray,
+        y_train: NDArray,
+        y_valid: NDArray,
         *,
         epochs: int = 100,
         evaluate_every_epochs: int = 10,
@@ -127,7 +127,7 @@ class Trainer:
 
     def _get_batches(
         self, batch_size: int = 100
-    ) -> Generator[Any, Tuple[ndarray, ndarray], None]:
+    ) -> Generator[Any, Tuple[NDArray, NDArray], None]:
         n_samples = self.x_train.shape[0]
         for i in range(0, n_samples, batch_size):
             batch_end = i + batch_size
@@ -140,7 +140,7 @@ class Trainer:
 
     def _batch_train(
         self,
-        batches: Generator[Any, Tuple[ndarray, ndarray], None],
+        batches: Generator[Any, Tuple[NDArray, NDArray], None],
         evaluate_every_batches: Optional[int],
     ) -> None:
         for batch_number, (x_batch, y_batch) in enumerate(batches):

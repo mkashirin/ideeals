@@ -1,7 +1,7 @@
 from typing import Any, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 from scipy.special import logsumexp
 
 from ._base import BaseLoss
@@ -49,15 +49,15 @@ class SoftmaxCELoss(BaseLoss):
         self.softmax_predicted = None
 
     @staticmethod
-    def normalize(array: ndarray) -> ndarray:
+    def normalize(array: NDArray) -> NDArray:
         return np.concatenate([array, 1 - array], axis=1)
 
     @staticmethod
-    def denormalize(array: ndarray) -> ndarray:
+    def denormalize(array: NDArray) -> NDArray:
         return array[np.newaxis, 0]
 
     @staticmethod
-    def softmax(array: ndarray, axis: Optional[int] = None) -> ndarray:
+    def softmax(array: NDArray, axis: Optional[int] = None) -> NDArray:
         return np.exp(array - logsumexp(array, axis=axis, keepdims=True))
 
     def _apply(self) -> Any:

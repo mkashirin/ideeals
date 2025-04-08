@@ -4,7 +4,7 @@ from time import perf_counter
 from typing import Dict, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 from scipy.stats import mode
 
 from ._base import BaseManualModel
@@ -19,7 +19,7 @@ class KNNClassificationManualModel(BaseManualModel):
         super().__init__()
         self.weights_map: Optional[Dict[int, int]]
 
-    def fit(self, x_train: ndarray, y_train: ndarray, *args, **kwargs) -> None:
+    def fit(self, x_train: NDArray, y_train: NDArray, *args, **kwargs) -> None:
         """Train the classifier. For k-nearest neighbors this is just
         memorizing the training data.
 
@@ -36,11 +36,11 @@ class KNNClassificationManualModel(BaseManualModel):
 
     def predict(
         self,
-        x_test: ndarray,
+        x_test: NDArray,
         n_neighbors: int = 5,
         n_loops: int = 0,
         weight_map: Optional[Dict[int, int]] = None,
-    ) -> ndarray:
+    ) -> NDArray:
         """Predict labels for test data using this classifier.
         The data passed to this method would be copied and used as
         NumPy :class:`ndarray`.
@@ -90,7 +90,7 @@ class KNNClassificationManualModel(BaseManualModel):
         return predicted_labels
 
     @staticmethod
-    def _compute_with_two_loops(x_train: ndarray, x_test: ndarray) -> ndarray:
+    def _compute_with_two_loops(x_train: NDArray, x_test: NDArray) -> NDArray:
         """Compute the Euclidean distances between data points using
         two loops.
         """
@@ -107,7 +107,7 @@ class KNNClassificationManualModel(BaseManualModel):
         return distances
 
     @staticmethod
-    def _compute_with_one_loop(x_train: ndarray, x_test: ndarray) -> ndarray:
+    def _compute_with_one_loop(x_train: NDArray, x_test: NDArray) -> NDArray:
         """Compute the Euclidean distances between data points using
         one loop.
         """
@@ -123,7 +123,7 @@ class KNNClassificationManualModel(BaseManualModel):
         return distances
 
     @staticmethod
-    def _compute_with_no_loops(x_train: ndarray, x_test: ndarray) -> ndarray:
+    def _compute_with_no_loops(x_train: NDArray, x_test: NDArray) -> NDArray:
         """Compute the Euclidean distances between data points using
         NumPy matrix operators only.
         """
@@ -152,11 +152,11 @@ class KNNClassificationManualModel(BaseManualModel):
 
     def _predict_labels(
         self,
-        distances: ndarray,
+        distances: NDArray,
         n_neighbors: int = 5,
         *,
         weight_map: Optional[Dict[int, int]] = None,
-    ) -> ndarray:
+    ) -> NDArray:
         """Predict labels for each test point.
 
         :parameter distances: Array of distances between data points.

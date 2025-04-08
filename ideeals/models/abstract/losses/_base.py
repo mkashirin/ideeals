@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any
 
-from numpy import ndarray
+from numpy.typing import NDArray
 
 
 class BaseLoss(ABC):
@@ -10,11 +10,11 @@ class BaseLoss(ABC):
     """
 
     def __init__(self) -> None:
-        self.actual: ndarray
-        self.predicted: ndarray
-        self.input_gradient: ndarray
+        self.actual: NDArray
+        self.predicted: NDArray
+        self.input_gradient: NDArray
 
-    def feed_forward(self, actual: ndarray, predicted: ndarray) -> float:
+    def feed_forward(self, actual: NDArray, predicted: NDArray) -> float:
         """Passes the actual and predicted values forward and returns the
         loss value.
         """
@@ -24,7 +24,7 @@ class BaseLoss(ABC):
         loss_value = self._apply()
         return loss_value
 
-    def propagate_backwards(self) -> ndarray:
+    def propagate_backwards(self) -> NDArray:
         """Passes the input gradient backward and returns the computed
         input gradient.
         """

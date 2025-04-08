@@ -1,7 +1,7 @@
 from typing import List, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from ._base import BaseOptimizer
 from ...._typing import DecayType
@@ -44,7 +44,7 @@ class SGDMomentumOptimizer(BaseOptimizer):
     ) -> None:
         super().__init__(learning_rate, final_learning_rate, decay_type)
         self.momentum = momentum
-        self.velocities: List[ndarray]
+        self.velocities: List[NDArray]
 
     def step(self) -> None:
         """Does the same as the default SGD optimizer's :method:`step()` function,

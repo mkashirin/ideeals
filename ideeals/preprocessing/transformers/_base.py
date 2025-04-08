@@ -1,7 +1,7 @@
 from abc import ABC, abstractmethod
 from typing import Any, Tuple
 
-from numpy import ndarray
+from numpy.typing import NDArray
 
 
 class BasePreprocessor(ABC):
@@ -21,13 +21,11 @@ class BasePreprocessor(ABC):
     @abstractmethod
     def transform(self, x) -> Any:
         """Transform the input features."""
-        message = (
-            "Every preprocessor must implement the `transform()` method."
-        )
+        message = "Every preprocessor must implement the `transform()` method."
         raise NotImplementedError(message)
 
     @staticmethod
-    def _get_values_masks(array: ndarray) -> Tuple[bool, bool]:
-        non_zero_values_mask = (array != 0)
+    def _get_values_masks(array: NDArray) -> Tuple[bool, bool]:
+        non_zero_values_mask = array != 0
         zero_values_mask = ~non_zero_values_mask
         return non_zero_values_mask, zero_values_mask

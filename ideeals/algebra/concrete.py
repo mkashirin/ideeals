@@ -1,7 +1,7 @@
-import numpy as np
-from numpy import ndarray
-
 from typing import Optional
+
+import numpy as np
+from numpy.typing import NDArray
 
 from ._base import BaseSolver
 
@@ -42,7 +42,7 @@ class GaussianEliminationBaseSolver(BaseSolver):
             )
 
     def fit(
-        self, coefficient_matrix: ndarray, scalars_vector: ndarray, **kwargs
+        self, coefficient_matrix: NDArray, scalars_vector: NDArray, **kwargs
     ) -> None:
         """Check whether given coefficient_matrix is consistent, independent
         and scalars vector has only one column before fitting.
@@ -57,7 +57,7 @@ class GaussianEliminationBaseSolver(BaseSolver):
         """
         super().fit(coefficient_matrix, scalars_vector)
 
-    def solve(self, *, round_to: Optional[int] = None) -> ndarray:
+    def solve(self, *, round_to: Optional[int] = None) -> NDArray:
         """Solve the independent system of linear equations.
 
         :parameter round_to: Number of decimals to which solution should be
@@ -100,7 +100,7 @@ class LeastSquaresSolver(GaussianEliminationBaseSolver):
         super().__init__()
 
     def fit(
-        self, coefficient_matrix: ndarray, scalars_vector: ndarray, **kwargs
+        self, coefficient_matrix: NDArray, scalars_vector: NDArray, **kwargs
     ):
         """Perform computations to transform given matrices in appropriate for
         GaussianEliminationBaseSolver form.

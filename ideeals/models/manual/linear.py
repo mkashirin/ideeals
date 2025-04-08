@@ -3,7 +3,7 @@ from time import perf_counter
 from typing import Dict, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from ._base import BaseManualModel
 from ..._typing import ComputationalMetadata, SamplesBatch, WeightsMap
@@ -22,8 +22,8 @@ class LinearRegressionManualModel(BaseManualModel):
 
     def fit(
         self,
-        x_train: ndarray,
-        y_train: ndarray,
+        x_train: NDArray,
+        y_train: NDArray,
         *args,
         n_iterations: int = 100,
         learning_rate: float = 0.01,
@@ -134,7 +134,7 @@ class LinearRegressionManualModel(BaseManualModel):
             info(f"Fitting complete! It took {fitting_time} seconds")
         return
 
-    def predict(self, x_test: ndarray) -> ndarray:
+    def predict(self, x_test: NDArray) -> NDArray:
         """Make predictions with the trained linear regression model.
 
         :parameter x_test: Test selection of features values.
@@ -151,8 +151,8 @@ class LinearRegressionManualModel(BaseManualModel):
 
     @staticmethod
     def _get_batch(
-        x_train: ndarray,
-        y_train: ndarray,
+        x_train: NDArray,
+        y_train: NDArray,
         batch_size: int,
         batch_start: int = 0,
     ) -> SamplesBatch:
@@ -186,7 +186,7 @@ class LinearRegressionManualModel(BaseManualModel):
         self.weights_map_: WeightsMap = {"weights": weights, "bias": bias}
 
     def _feed_forward(
-        self, x_batch: ndarray, y_batch: ndarray
+        self, x_batch: NDArray, y_batch: NDArray
     ) -> ComputationalMetadata:
         """Make predictions and calculate loss for a linear regression
         model.
@@ -195,7 +195,7 @@ class LinearRegressionManualModel(BaseManualModel):
         predictions = product + self.weights_map_["bias"]
         loss = compute_mean_squared_error(y_batch, predictions)
 
-        computational_meta: Dict[str, ndarray] = {
+        computational_meta: Dict[str, NDArray] = {
             "x_batch": x_batch,
             "y_batch": y_batch,
             "product": product,
@@ -210,7 +210,7 @@ class LinearRegressionManualModel(BaseManualModel):
         return with_loss_data
 
     def _propagate_backwards(
-        self, computational_meta: Dict[str, ndarray]
+        self, computational_meta: Dict[str, NDArray]
     ) -> WeightsMap:
         """Compute new gradients and evaluate them at the given in
         :class:`ComputationalMetadata` points for a linear regression model

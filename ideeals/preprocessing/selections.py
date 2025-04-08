@@ -1,12 +1,12 @@
 from typing import List, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from .._typing import Selections
 
 
-def tokenize_probabilities(matrix: ndarray) -> ndarray:
+def tokenize_probabilities(matrix: NDArray) -> NDArray:
     """Tokenize the probabilities of each outcome in the output layer.
 
     :parameter matrix: Probabilities matrix, filled with values ranging
@@ -24,7 +24,7 @@ def tokenize_probabilities(matrix: ndarray) -> ndarray:
     return binary_matrix
 
 
-def revert_matrix(matrix: ndarray) -> ndarray:
+def revert_matrix(matrix: NDArray) -> NDArray:
     """Revert the target binary matrix to original vector format.
 
     :parameter matrix: The binary matrix to revert.
@@ -36,7 +36,7 @@ def revert_matrix(matrix: ndarray) -> ndarray:
     return np.argmax(matrix, axis=1).reshape(-1, 1)
 
 
-def transform_binary(vector: ndarray) -> ndarray:
+def transform_binary(vector: NDArray) -> NDArray:
     """Convert the target vector to binary matrix.
 
     :parameter vector: Target vector, which is to be transformed.
@@ -56,8 +56,8 @@ def transform_binary(vector: ndarray) -> ndarray:
 
 
 def reshape_channel_images(
-    images: ndarray, n_channels: int, *, image_height: int, image_width: int
-) -> ndarray:
+    images: NDArray, n_channels: int, *, image_height: int, image_width: int
+) -> NDArray:
     """Reshape channel images stored as arrays of pixels to be properly
     consumed by the convolutional neural nets.
 
@@ -78,7 +78,7 @@ def reshape_channel_images(
     return reshaped
 
 
-def normalize_data(*, to_normalize: ndarray, std_from: ndarray) -> ndarray:
+def normalize_data(*, to_normalize: NDArray, std_from: NDArray) -> NDArray:
     """Normalize the data using the standard deviation from another data.
 
     :keyword to_normalize: Array of data to be normalized.
@@ -113,12 +113,12 @@ class DataSplitter:
         """
         self.random_seed = random_seed
         self.permute = permute
-        self._selections: List[ndarray]
+        self._selections: List[NDArray]
 
     def split_data(
         self,
-        x: ndarray,
-        y: ndarray,
+        x: NDArray,
+        y: NDArray,
         *,
         test_size: float,
         valid_size: Optional[float] = None,
@@ -158,7 +158,7 @@ class DataSplitter:
         )
         return selections
 
-    def _set_standard(self, x: ndarray, y: ndarray, test_size: float) -> None:
+    def _set_standard(self, x: NDArray, y: NDArray, test_size: float) -> None:
         train_test_index = int(x.shape[0] * test_size)
 
         (x_train, x_test), (y_train, y_test) = (
@@ -168,7 +168,7 @@ class DataSplitter:
         self._selections = [x_train, x_test, y_train, y_test]
 
     def _add_valid(
-        self, test_length: int, x: ndarray, y: ndarray, valid_size: float
+        self, test_length: int, x: NDArray, y: NDArray, valid_size: float
     ) -> None:
         test_valid_index = int(test_length * valid_size)
 

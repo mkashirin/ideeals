@@ -1,4 +1,4 @@
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from typing import Dict, Optional
 
@@ -37,7 +37,7 @@ class NeuralNetwork:
             for layer in self.layers.values():
                 setattr(layer, "random_seed", random_seed)
 
-    def feed_forward(self, x_input: ndarray) -> ndarray:
+    def feed_forward(self, x_input: NDArray) -> NDArray:
         """Passes the input batch forward through the neural network and
         returns the output.
 
@@ -52,7 +52,7 @@ class NeuralNetwork:
             x_output = layer.feed_forward(x_output)
         return x_output
 
-    def propagate_backwards(self, loss_gradient: ndarray) -> None:
+    def propagate_backwards(self, loss_gradient: NDArray) -> None:
         """Propagates the loss gradient backward through the neural network.
 
         :parameter loss_gradient: The gradient of the loss function.
@@ -62,7 +62,7 @@ class NeuralNetwork:
         for layer in reversed(self.layers.values()):
             gradient = layer.propagate_backwards(gradient)
 
-    def train(self, xbatch: ndarray, ybatch: ndarray) -> float:
+    def train(self, xbatch: NDArray, ybatch: NDArray) -> float:
         """Trains the neural network on the input batch and returns the
         loss value.
 

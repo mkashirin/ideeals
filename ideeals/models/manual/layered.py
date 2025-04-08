@@ -10,7 +10,7 @@
 from typing import Any, Dict, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from .linear import LinearRegressionManualModel
 from ...metrics import compute_mean_squared_error
@@ -27,8 +27,8 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
 
     def fit(
         self,
-        x_train: ndarray,
-        y_train: ndarray,
+        x_train: NDArray,
+        y_train: NDArray,
         *args,
         n_iterations: int = 1000,
         learning_rate: float = 0.001,
@@ -79,7 +79,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
             **kwargs,
         )
 
-    def predict(self, x_test: ndarray) -> ndarray:
+    def predict(self, x_test: NDArray) -> NDArray:
         """Make predictions with the trained layered regression model and fit the
         curve to your data.
 
@@ -101,7 +101,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         return predictions
 
     @staticmethod
-    def sigmoid(value: ndarray) -> ndarray:
+    def sigmoid(value: NDArray) -> NDArray:
         return 1 / (1 + np.exp(-value))
 
     def _get_weights(self, **kwargs) -> None:
@@ -129,7 +129,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         }
 
     def _feed_forward(
-        self, x_batch: ndarray, y_batch: ndarray
+        self, x_batch: NDArray, y_batch: NDArray
     ) -> ComputationalMetadata:
         """Make predictions and calculate loss for a linear regression
         model.
@@ -143,7 +143,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         predictions = hidden_product + self.weights_map_["hidden_bias"]
         loss = compute_mean_squared_error(y_batch, predictions)
 
-        computational_meta: Dict[str, ndarray] = {
+        computational_meta: Dict[str, NDArray] = {
             "x_batch": x_batch,
             "y_batch": y_batch,
             "input_product": input_product,
@@ -161,7 +161,7 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         return with_loss_data
 
     def _propagate_backwards(
-        self, computational_meta: Dict[str, ndarray]
+        self, computational_meta: Dict[str, NDArray]
     ) -> WeightsMap:
         """Compute new gradients and evaluate them at the given in
         :class:`ComputationalMetadata` points for a linear regression model

@@ -2,12 +2,12 @@ from itertools import chain
 from typing import Any, Optional
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from ._typing import ConfusionMatrix, IndicesMap
 
 
-def compute_mean_absolute_error(actual: ndarray, predicted: ndarray) -> float:
+def compute_mean_absolute_error(actual: NDArray, predicted: NDArray) -> float:
     """Compute mean absolute error metric for regression model predictions.
 
     :parameter actual: Actual target values.
@@ -25,7 +25,7 @@ def compute_mean_absolute_error(actual: ndarray, predicted: ndarray) -> float:
     return error
 
 
-def compute_mean_squared_error(actual: ndarray, predicted: ndarray) -> float:
+def compute_mean_squared_error(actual: NDArray, predicted: NDArray) -> float:
     """Compute root mean squared error metric for regression model
     predictions.
 
@@ -45,7 +45,7 @@ def compute_mean_squared_error(actual: ndarray, predicted: ndarray) -> float:
 
 
 def compute_root_mean_squared_error(
-    actual: ndarray, predicted: ndarray
+    actual: NDArray, predicted: NDArray
 ) -> float:
     """Compute root mean squared error metric for regression model
     predictions.
@@ -65,7 +65,7 @@ def compute_root_mean_squared_error(
     return error
 
 
-def compute_accuracy(actual: ndarray, predicted: ndarray) -> float:
+def compute_accuracy(actual: NDArray, predicted: NDArray) -> float:
     """Compute accuracy for any model predictions.
 
     :parameter actual: Actual target values.
@@ -84,8 +84,8 @@ def compute_accuracy(actual: ndarray, predicted: ndarray) -> float:
 
 
 def compute_confusion_matrix(
-    actual: ndarray,
-    predicted: ndarray,
+    actual: NDArray,
+    predicted: NDArray,
     indices_map: Optional[IndicesMap] = None,
 ) -> ConfusionMatrix:
     """Compute confusion matrix and get it with indices map for
@@ -137,7 +137,7 @@ def compute_confusion_matrix(
 
 
 def compute_sensitivities_and_specificities(
-    actual: ndarray, predicted: ndarray, as_array: bool = True
+    actual: NDArray, predicted: NDArray, as_array: bool = True
 ) -> Any:
     """Compute sensitivities and specificities for classification model
     predictions.

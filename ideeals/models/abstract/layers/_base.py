@@ -1,11 +1,11 @@
 from abc import ABC, abstractmethod
 from typing import Dict, Optional, Union
 
-from numpy import ndarray
 from numpy.random import seed
+from numpy.typing import NDArray
 
-from ..operators._base import BaseOperator, ParameterizedOperator
 from ...._typing import ArraysMap, WeightsOption
+from ..operators._base import BaseOperator, ParameterizedOperator
 
 
 class BaseLayer(ABC):
@@ -39,7 +39,7 @@ class BaseLayer(ABC):
         message = "Every layer should implement the `_setup_layer()` method."
         raise NotImplementedError(message)
 
-    def feed_forward(self, input_: ndarray) -> ndarray:
+    def feed_forward(self, input_: NDArray) -> NDArray:
         """Passes the input forward through the layer and returns the
         output.
 
@@ -59,7 +59,7 @@ class BaseLayer(ABC):
 
         return output
 
-    def propagate_backwards(self, output_gradients: ndarray) -> ndarray:
+    def propagate_backwards(self, output_gradients: NDArray) -> NDArray:
         """Propagates the output gradients backward through the layer and
         returns the input gradients.
 

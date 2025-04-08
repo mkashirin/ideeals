@@ -1,7 +1,7 @@
 from typing import Any
 
 import numpy as np
-from numpy import ndarray
+from numpy.typing import NDArray
 
 from ._base import BaseOperator, ParameterizedOperator
 
@@ -9,17 +9,17 @@ from ._base import BaseOperator, ParameterizedOperator
 class LinearPassageOperator(BaseOperator):
     """Operator that passes data in both forward and backward directions."""
 
-    def _apply(self) -> ndarray:
+    def _apply(self) -> NDArray:
         """Return the input data."""
         return self.input_
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
         """Return the output gradient."""
         return output_gradient
 
 
 class RelUFunctionOperator(BaseOperator):
-    """Operator that applies rectified linear unit function to the 
+    """Operator that applies rectified linear unit function to the
     input data.
     """
 
@@ -28,7 +28,7 @@ class RelUFunctionOperator(BaseOperator):
         applied = np.clip(self.input_, 0, self.input_)
         return applied
 
-    def _compute_gradient(self, output_gradient: ndarray) -> Any:
+    def _compute_gradient(self, output_gradient: NDArray) -> Any:
         """Compute the gradient of the rectified linear unit function."""
         mask = self.output_ >= 0
         gradient = output_gradient * mask
@@ -38,12 +38,12 @@ class RelUFunctionOperator(BaseOperator):
 class SigmoidFunctionOperator(BaseOperator):
     """Operator that applies a sigmoid function to the input data."""
 
-    def _apply(self) -> ndarray:
+    def _apply(self) -> NDArray:
         """Apply the sigmoid function to the input data."""
         applied = 1 / (1 + np.exp(-self.input_))
         return applied
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
         """Compute the gradient of the sigmoid function."""
         gradient = (self.output_ * (1 - self.output_)) * output_gradient
         return gradient
@@ -55,12 +55,12 @@ class TanHFunctionOperator(BaseOperator):
     def __init__(self) -> None:
         super().__init__()
 
-    def _apply(self, inference: bool = True) -> ndarray:
+    def _apply(self, inference: bool = True) -> NDArray:
         """Apply the hyperbolic tangent function to the input data."""
         applied = np.tanh(self.input_)
         return applied
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
         """Compute the gradient of the hyperbolic tangent function."""
         gradient = output_gradient * (1 - np.power(self.output_, 2))
         return gradient
@@ -69,25 +69,25 @@ class TanHFunctionOperator(BaseOperator):
 class BiasAdditionOperator(ParameterizedOperator):
     """Operator that adds a bias to the input data."""
 
-    def __init__(self, bias: ndarray) -> None:
+    def __init__(self, bias: NDArray) -> None:
         super().__init__(bias)
 
-    def _apply(self) -> ndarray:
+    def _apply(self) -> NDArray:
         """Apply the bias addition operation."""
         applied = self.input_ + self.parameter
         return applied
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
-        """Compute the gradient of the bias addition operation with 
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
+        """Compute the gradient of the bias addition operation with
         respect to the input data.
         """
         gradient = np.ones_like(self.input_) * output_gradient
         return gradient
 
     def _compute_parameterized_gradient(
-        self, output_gradient: ndarray
-    ) -> ndarray:
-        """Compute the gradient of the bias addition operation with 
+        self, output_gradient: NDArray
+    ) -> NDArray:
+        """Compute the gradient of the bias addition operation with
         respect to the parameter.
         """
         output_gradient_matrix = np.ones_like(self.parameter) * output_gradient
@@ -100,7 +100,7 @@ class BiasAdditionOperator(ParameterizedOperator):
 class WeightedMultiplicationOperator(ParameterizedOperator):
     """Operator that multiplies weights by the input data."""
 
-    def __init__(self, weights: ndarray) -> None:
+    def __init__(self, weights: NDArray) -> None:
         super().__init__(weights)
 
     def _apply(self) -> Any:
@@ -108,8 +108,8 @@ class WeightedMultiplicationOperator(ParameterizedOperator):
         applied = np.dot(self.input_, self.parameter)
         return applied
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
-        """Compute the gradient of the product of weights and input data 
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
+        """Compute the gradient of the product of weights and input data
         with respect to the input.
         """
         gradient = np.dot(
@@ -118,9 +118,9 @@ class WeightedMultiplicationOperator(ParameterizedOperator):
         return gradient
 
     def _compute_parameterized_gradient(
-        self, output_gradient: ndarray
-    ) -> ndarray:
-        """Compute the gradient of the product of weights and input data 
+        self, output_gradient: NDArray
+    ) -> NDArray:
+        """Compute the gradient of the product of weights and input data
         with respect to the parameter.
         """
         parametrized_gradient = np.dot(
@@ -130,8 +130,8 @@ class WeightedMultiplicationOperator(ParameterizedOperator):
 
 
 class DropoutOperator(BaseOperator):
-    """Operator that implements the Dropout operation. This means that 
-    it will drop off some neurons at the provided dropout rate. It 
+    """Operator that implements the Dropout operation. This means that
+    it will drop off some neurons at the provided dropout rate. It
     actually can reduce the risks of overfitting your models.
     """
 
@@ -139,7 +139,7 @@ class DropoutOperator(BaseOperator):
         super().__init__()
         self.dropout_rate = dropout_rate
 
-    def _apply(self, inference: bool = False) -> ndarray:
+    def _apply(self, inference: bool = False) -> NDArray:
         """Apply the Dropout operation."""
         if inference:
             return self.input_ * self.dropout_rate
@@ -148,7 +148,7 @@ class DropoutOperator(BaseOperator):
         )
         return self.input_ * self.mask
 
-    def _compute_gradient(self, output_gradient: ndarray) -> ndarray:
+    def _compute_gradient(self, output_gradient: NDArray) -> NDArray:
         """Compute the gradient of the Dropout operation."""
         return output_gradient * self.mask
 
@@ -156,12 +156,12 @@ class DropoutOperator(BaseOperator):
 class ConvolutionOperator(ParameterizedOperator):
     """Operator that implements the mathematical convolution operation."""
 
-    def __init__(self, kernel: ndarray) -> None:
+    def __init__(self, kernel: NDArray) -> None:
         super().__init__(kernel)
         self.parameter_size = kernel.shape[2]
         self.parameter_pad = self.parameter_size // 2
 
-    def _pad_channel(self, input_tensor: ndarray) -> ndarray:
+    def _pad_channel(self, input_tensor: NDArray) -> NDArray:
         """Pad the whole channel to avoid data leaks."""
         channel_padded = [
             np.pad(
@@ -172,7 +172,7 @@ class ConvolutionOperator(ParameterizedOperator):
         channel_padded = np.stack(channel_padded)
         return channel_padded
 
-    def _get_image_patches(self, input_tensor: ndarray) -> ndarray:
+    def _get_image_patches(self, input_tensor: NDArray) -> NDArray:
         batch_padded = [
             self._pad_channel(observation) for observation in input_tensor
         ]
@@ -226,8 +226,8 @@ class ConvolutionOperator(ParameterizedOperator):
 
         return output_tensor
 
-    def _compute_gradient(self, output_gradient: ndarray) -> Any:
-        """Compute the gradient of the convolution operation with 
+    def _compute_gradient(self, output_gradient: NDArray) -> Any:
+        """Compute the gradient of the convolution operation with
         respect to the input.
         """
 
@@ -242,18 +242,22 @@ class ConvolutionOperator(ParameterizedOperator):
         gradient = np.matmul(output_patches, parameter)
         gradient = np.transpose(
             # fmt: off
-            gradient.reshape((
-                self.batch_size, self.image_height,
-                self.image_height, self.parameter.shape[0],
-            )), 
+            gradient.reshape(
+                (
+                    self.batch_size,
+                    self.image_height,
+                    self.image_height,
+                    self.parameter.shape[0],
+                )
+            ),
             axes=(0, 3, 1, 2),
             # fmt: on
         )
 
         return gradient
 
-    def _compute_parameterized_gradient(self, output_gradient: ndarray) -> Any:
-        """Compute the gradient of the convolution operation with 
+    def _compute_parameterized_gradient(self, output_gradient: NDArray) -> Any:
+        """Compute the gradient of the convolution operation with
         respect to the parameter.
         """
 
@@ -272,10 +276,14 @@ class ConvolutionOperator(ParameterizedOperator):
         parameterized_gradient = np.matmul(input_patches, output_gradient)
         parameterized_gradient = np.transpose(
             # fmt: off
-            parameterized_gradient.reshape((
-                input_channels, self.parameter_size,
-                self.parameter_size, output_channels,
-            )), 
+            parameterized_gradient.reshape(
+                (
+                    input_channels,
+                    self.parameter_size,
+                    self.parameter_size,
+                    output_channels,
+                )
+            ),
             axes=(0, 3, 1, 2),
             # fmt: on
         )
@@ -284,19 +292,19 @@ class ConvolutionOperator(ParameterizedOperator):
 
 
 class FlattenOperator(BaseOperator):
-    """Operator that implements the Flatten operation. FlattenOperator 
-    is required as the last operator applied in the convolutional neural 
-    network if You want to see the human readable results coming out of 
+    """Operator that implements the Flatten operation. FlattenOperator
+    is required as the last operator applied in the convolutional neural
+    network if You want to see the human readable results coming out of
     Your model.
     """
 
     def __init__(self) -> None:
         super().__init__()
 
-    def _apply(self, inference: bool = False) -> ndarray:
+    def _apply(self, inference: bool = False) -> NDArray:
         """Apply the Flatten operation."""
         return self.input_.reshape(self.input_.shape[0], -1)
 
-    def _compute_gradient(self, output_gradient: ndarray) -> Any:
+    def _compute_gradient(self, output_gradient: NDArray) -> Any:
         """Compute the gradient of the Flatten operation."""
         return output_gradient.reshape(self.input_.shape)
