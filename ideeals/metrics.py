@@ -10,10 +10,10 @@ from ._typing import ConfusionMatrix, IndicesMap
 def compute_mean_absolute_error(actual: NDArray, predicted: NDArray) -> float:
     """Compute mean absolute error metric for regression model predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :return: Mean absolute error of the model.
         :rtype: :class:`float`
@@ -29,10 +29,10 @@ def compute_mean_squared_error(actual: NDArray, predicted: NDArray) -> float:
     """Compute root mean squared error metric for regression model
     predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :return: Mean squared error of the model.
         :rtype: :class:`float`
@@ -50,10 +50,10 @@ def compute_root_mean_squared_error(
     """Compute root mean squared error metric for regression model
     predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :returns: Root of mean squared error of the model.
         :rtype: :class:`float`
@@ -68,10 +68,10 @@ def compute_root_mean_squared_error(
 def compute_accuracy(actual: NDArray, predicted: NDArray) -> float:
     """Compute accuracy for any model predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :returns: Accuracy score of the model (% of correct predictions).
         :rtype: :class:`float`
@@ -91,10 +91,10 @@ def compute_confusion_matrix(
     """Compute confusion matrix and get it with indices map for
     classification model predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :keyword indices_map: Dictionary, where keys are features names and
     values are integer indices in the confusion matrix.
@@ -130,7 +130,7 @@ def compute_confusion_matrix(
         _map_to_integers(predicted_list, indices_map),
     )
     for a, p in zip(mapped_actual, mapped_predicted):
-        confusion_matrix[a, p] += 1
+        confusion_matrix[a, p] += 1  # type: ignore
     confusion_matrix_with_map: ConfusionMatrix = confusion_matrix, indices_map
 
     return confusion_matrix_with_map
@@ -142,20 +142,20 @@ def compute_sensitivities_and_specificities(
     """Compute sensitivities and specificities for classification model
     predictions.
 
-    :parameter actual: Actual target values.
-        :type actual: :class:`ndarray`
-    :parameter predicted: Predicted target values.
-        :type predicted: :class:`ndarray`
+    :param actual: Actual target values.
+        :type actual: :class:`NDArray`
+    :param predicted: Predicted target values.
+        :type predicted: :class:`NDArray`
 
     :keyword as_array: If :data:`True` is passed, function will return
-    regular NumPy :class:`ndarray`, where rows correspond sensitivities to
+    regular NumPy :class:`NDArray`, where rows correspond sensitivities to
     and specificities of features (those correspond to columns); otherwise
     function will return :class:`dict` which describes upper-mentioned
     alignment explicitly.
         :type as_array: :class:`bool`
 
-    :returns: NumPy :class:`ndarray` or dictionary of sensitivities and
-    specificities (depends on :parameter:`as_array`).
+    :returns: NumPy :class:`NDArray` or dictionary of sensitivities and
+    specificities (depends on :param:`as_array`).
         :rtype: :class:`Any`
 
     :raises ValueError: If actual and predicted arrays have

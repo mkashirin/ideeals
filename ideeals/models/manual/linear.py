@@ -35,10 +35,10 @@ class LinearRegressionManualModel(BaseManualModel):
         """Train a linear regression model for a specified number of
         iterations using gradient descent or algebraic resolution.
 
-        :parameter x_train: Train selection of features values.
-            :type x_train: :class:`ndarray`
-        :parameter y_train: Train selection of target values.
-            :type y_train: :class:`ndarray`
+        :param x_train: Train selection of features values.
+            :type x_train: :class:`NDArray`
+        :param y_train: Train selection of target values.
+            :type y_train: :class:`NDArray`
 
         :keyword n_iterations: Number of iterations for model cycling.
             :type n_iterations: :class:`int`
@@ -137,11 +137,11 @@ class LinearRegressionManualModel(BaseManualModel):
     def predict(self, x_test: NDArray) -> NDArray:
         """Make predictions with the trained linear regression model.
 
-        :parameter x_test: Test selection of features values.
-            :type x_test: :class:`ndarray`
+        :param x_test: Test selection of features values.
+            :type x_test: :class:`NDArray`
 
         :returns: Array of predicted target values.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
 
         product = np.dot(x_test, self.weights_map_["weights"])
@@ -157,7 +157,7 @@ class LinearRegressionManualModel(BaseManualModel):
         batch_start: int = 0,
     ) -> SamplesBatch:
         """Generate a batch for training starting from the
-        :parameter:`batch_start` position.
+        :param:`batch_start` position.
         """
         if batch_start + batch_size > x_train.shape[0]:
             batch_size = x_train.shape[0] - batch_start

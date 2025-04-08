@@ -41,10 +41,10 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         also a possibility to change the number of neurons in hidden layer by
         passing additional :keyword:`hidden_size` keyword argument.
 
-        :parameter x_train: Train selection of features values.
-            :type x_train: :class:`ndarray`
-        :parameter y_train: Train selection of target values.
-            :type y_train: :class:`ndarray`
+        :param x_train: Train selection of features values.
+            :type x_train: :class:`NDArray`
+        :param y_train: Train selection of target values.
+            :type y_train: :class:`NDArray`
 
         :keyword n_iterations: Number of iterations that model will
         cycle through.
@@ -83,11 +83,11 @@ class LayeredRegressionManualModel(LinearRegressionManualModel):
         """Make predictions with the trained layered regression model and fit the
         curve to your data.
 
-        :parameter x_test: Test selection of features values
-            :type x_test: :class:`ndarray`
+        :param x_test: Test selection of features values
+            :type x_test: :class:`NDArray`
 
         :returns: Array of predicted target values
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
 
         input_product = np.dot(x_test, self.weights_map_["input_weights"])

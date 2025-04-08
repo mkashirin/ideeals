@@ -9,13 +9,13 @@ from .._typing import Selections
 def tokenize_probabilities(matrix: NDArray) -> NDArray:
     """Tokenize the probabilities of each outcome in the output layer.
 
-    :parameter matrix: Probabilities matrix, filled with values ranging
+    :param matrix: Probabilities matrix, filled with values ranging
     from 0 and 1.
-        :type matrix: :class:`ndarray`
+        :type matrix: :class:`NDArray`
 
     :returns: Binary matrix, where columns represent classes and rows
     represent samples.
-        :rtype: :class:`ndarray`
+        :rtype: :class:`NDArray`
     """
     binary_matrix = np.zeros_like(matrix)
     max_indices = np.argmax(matrix, axis=1)
@@ -27,11 +27,11 @@ def tokenize_probabilities(matrix: NDArray) -> NDArray:
 def revert_matrix(matrix: NDArray) -> NDArray:
     """Revert the target binary matrix to original vector format.
 
-    :parameter matrix: The binary matrix to revert.
-        :type matrix: :class:`ndarray`
+    :param matrix: The binary matrix to revert.
+        :type matrix: :class:`NDArray`
 
     :returns: Vector formatted from the binary matrix passed.
-        :rtype: :class:`ndarray`
+        :rtype: :class:`NDArray`
     """
     return np.argmax(matrix, axis=1).reshape(-1, 1)
 
@@ -39,12 +39,12 @@ def revert_matrix(matrix: NDArray) -> NDArray:
 def transform_binary(vector: NDArray) -> NDArray:
     """Convert the target vector to binary matrix.
 
-    :parameter vector: Target vector, which is to be transformed.
-        :type vector: :class:`ndarray`
+    :param vector: Target vector, which is to be transformed.
+        :type vector: :class:`NDArray`
 
     :returns: Binary matrix, where columns represent classes and rows
     represent samples.
-        :rtype: :class:`ndarray`
+        :rtype: :class:`NDArray`
     """
     n_values = vector.shape[0]
     max_value = np.max(vector)
@@ -61,9 +61,9 @@ def reshape_channel_images(
     """Reshape channel images stored as arrays of pixels to be properly
     consumed by the convolutional neural nets.
 
-    :parameter images: Array of images to be reshaped.
-        :type images: :class:`ndarray`
-    :parameter n_channels: Number of channels of the single image.
+    :param images: Array of images to be reshaped.
+        :type images: :class:`NDArray`
+    :param n_channels: Number of channels of the single image.
         :type n_channels: :class:`int`
 
     :keyword image_height: Height of the single image in pixels.
@@ -72,7 +72,7 @@ def reshape_channel_images(
         :type image_width: :class:`int`
 
     :returns: Array of images reshaped in a specified way.
-        :rtype: :class:`ndarray`
+        :rtype: :class:`NDArray`
     """
     reshaped = images.reshape(-1, n_channels, image_height, image_width)
     return reshaped
@@ -82,12 +82,12 @@ def normalize_data(*, to_normalize: NDArray, std_from: NDArray) -> NDArray:
     """Normalize the data using the standard deviation from another data.
 
     :keyword to_normalize: Array of data to be normalized.
-        :type to_normalize: :class:`ndarray`
+        :type to_normalize: :class:`NDArray`
     :keyword std_from: Array to be taken standard deviation from.
-        :type std_from: :class:`ndarray`
+        :type std_from: :class:`NDArray`
 
     :returns: Normalized array.
-        :rtype: :class:`ndarray`
+        :rtype: :class:`NDArray`
     """
 
     normalized = to_normalize / np.nanstd(std_from)
@@ -102,12 +102,12 @@ class DataSplitter:
     def __init__(
         self, permute: bool = False, random_seed: Optional[int] = None
     ):
-        """Set parameters for the splitting.
+        """Set params for the splitting.
 
-        :parameter permute: Defines whether data will be permuted before
+        :param permute: Defines whether data will be permuted before
         split operation or not.
             :type permute: :class:`bool`
-        :parameter random_seed: Random seed that will be applied during
+        :param random_seed: Random seed that will be applied during
         the process.
             :type random_seed: :class:`Optional[int]`
         """
@@ -125,13 +125,13 @@ class DataSplitter:
     ) -> Selections:
         """Split the data on train, validation and test selections.
 
-        :parameter x: Features data, that would be split on train and
+        :param x: Features data, that would be split on train and
         test selections.
-            :type x: :class:`ndarray`
-        :parameter y: Target data, that would be split on train and
+            :type x: :class:`NDArray`
+        :param y: Target data, that would be split on train and
         test selections.
-            :type y: :class:`ndarray`
-        :parameter test_size: Percentage of data that will be allocated for the
+            :type y: :class:`NDArray`
+        :param test_size: Percentage of data that will be allocated for the
         test selection.
             :type test_size: :class:`float`
 
@@ -139,7 +139,7 @@ class DataSplitter:
         validation selection.
             :type valid_size: :class:`Optional[float]`
 
-        :returns: Tuple of selections split according to specified parameters.
+        :returns: Tuple of selections split according to specified params.
             :rtype: :class:`Selections`
         """
         if self.random_seed:

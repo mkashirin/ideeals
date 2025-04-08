@@ -23,10 +23,10 @@ class KNNClassificationManualModel(BaseManualModel):
         """Train the classifier. For k-nearest neighbors this is just
         memorizing the training data.
 
-        :parameter x_train: Train selection of features values.
-            :type x_train: :class:`ndarray`
-        :parameter y_train: Train selection of target values.
-            :type y_train: :class:`ndarray`
+        :param x_train: Train selection of features values.
+            :type x_train: :class:`NDArray`
+        :param y_train: Train selection of target values.
+            :type y_train: :class:`NDArray`
 
         :raises ValueError: If `x` and `y` do not pass validation conditions,
         expressed in :method:`_validate_shapes()` method of the
@@ -43,10 +43,10 @@ class KNNClassificationManualModel(BaseManualModel):
     ) -> NDArray:
         """Predict labels for test data using this classifier.
         The data passed to this method would be copied and used as
-        NumPy :class:`ndarray`.
+        NumPy :class:`NDArray`.
 
-        :parameter x_test: Test selection of x (set x) values.
-            :type x_test: :class:`ndarray`
+        :param x_test: Test selection of x (set x) values.
+            :type x_test: :class:`NDArray`
 
         :keyword n_neighbors: Number of neighbors to account distance to.
             :type n_neighbors: :class:`int`
@@ -58,7 +58,7 @@ class KNNClassificationManualModel(BaseManualModel):
             :type weight_map: :class:`Optional[Dict[int, int]]`
 
         :returns: Array of predicted labels.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
 
         if weight_map is not None and len(weight_map) != n_neighbors:
@@ -140,7 +140,7 @@ class KNNClassificationManualModel(BaseManualModel):
         closest_neighbors: list, weight_map: Dict[int, int]
     ) -> list:
         """Add more weight for a certain neighbor according to the
-        :parameter:`weight_map`.
+        :param:`weight_map`.
         """
         weighted_list = list()
         for i, value in enumerate(closest_neighbors):
@@ -159,9 +159,9 @@ class KNNClassificationManualModel(BaseManualModel):
     ) -> NDArray:
         """Predict labels for each test point.
 
-        :parameter distances: Array of distances between data points.
-            :type distances: :class:`ndarray`
-        :parameter n_neighbors: Number of neighbors to account distance to.
+        :param distances: Array of distances between data points.
+            :type distances: :class:`NDArray`
+        :param n_neighbors: Number of neighbors to account distance to.
             :type n_neighbors: :class:`int`
 
         :keyword weight_map: A dictionary which maps indices of neighbors to
@@ -169,7 +169,7 @@ class KNNClassificationManualModel(BaseManualModel):
             :type weight_map: :class:`Optional[Dict[int, int]]`
 
         :return: Array of labels predicted based on nearest neighbors.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         n_test_samples = distances.shape[0]
         y_predicted = np.zeros((n_test_samples, 1))

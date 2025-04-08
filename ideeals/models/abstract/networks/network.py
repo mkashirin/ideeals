@@ -19,9 +19,9 @@ class NeuralNetwork:
         """Initialize the NeuralNetwork with layers, loss function, and an
         optional random seed.
 
-        :parameter layers: The layers of the neural network.
+        :param layers: The layers of the neural network.
             :type layers: :class:`Dict[str, BaseLayer]`
-        :parameter loss_function: The loss function used for training the
+        :param loss_function: The loss function used for training the
         network.
             :type loss_function: :class:`BaseEvaluator`
 
@@ -41,11 +41,11 @@ class NeuralNetwork:
         """Passes the input batch forward through the neural network and
         returns the output.
 
-        :parameter x_input: The input features to pass to the neural network.
-            :type x_input: :class:`ndarray`
+        :param x_input: The input features to pass to the neural network.
+            :type x_input: :class:`NDArray`
 
         :returns: The output of the neural network (predictions).
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         x_output = x_input
         for layer in self.layers.values():
@@ -55,8 +55,8 @@ class NeuralNetwork:
     def propagate_backwards(self, loss_gradient: NDArray) -> None:
         """Propagates the loss gradient backward through the neural network.
 
-        :parameter loss_gradient: The gradient of the loss function.
-            :type loss_gradient: :class:`ndarray`
+        :param loss_gradient: The gradient of the loss function.
+            :type loss_gradient: :class:`NDArray`
         """
         gradient = loss_gradient
         for layer in reversed(self.layers.values()):
@@ -66,10 +66,10 @@ class NeuralNetwork:
         """Trains the neural network on the input batch and returns the
         loss value.
 
-        :parameter x_batch: The input batch for training;
-            :type x_batch: :class:`ndarray`
-        :parameter y_batch: The target output batch for training.
-            :type y_batch: :class:`ndarray`
+        :param x_batch: The input batch for training;
+            :type x_batch: :class:`NDArray`
+        :param y_batch: The target output batch for training.
+            :type y_batch: :class:`NDArray`
 
         :returns: The loss value after training
             :rtype: :class:`float`
@@ -80,14 +80,14 @@ class NeuralNetwork:
 
         return loss_value
 
-    def get_parameters(self):
-        """Generator to yield the parameters of the neural network layers."""
+    def get_params(self):
+        """Generator to yield the params of the neural network layers."""
         for layer in self.layers.values():
-            yield from layer.parameters.values()
+            yield from layer.params.values()  # type: ignore
 
-    def get_parameterized_gradients(self):
-        """Generator to yield the parameterized gradients of the neural
+    def get_paramized_gradients(self):
+        """Generator to yield the paramized gradients of the neural
         network layers.
         """
         for layer in self.layers.values():
-            yield from layer.parameters_gradients.values()
+            yield from layer.params_gradients.values()  # type: ignore

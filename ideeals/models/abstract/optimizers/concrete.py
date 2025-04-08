@@ -54,13 +54,13 @@ class SGDMomentumOptimizer(BaseOptimizer):
         if self.first:
             self.velocities = [
                 np.zeros_like(parameters)
-                for parameters in self.network.get_parameters()
+                for parameters in self.network.get_parameters()  # type: ignore
             ]
             self.first = False
 
         for parameter, parameterized_gradient, velocity in zip(
-            self.network.get_parameters(),
-            self.network.get_parameterized_gradients(),
+            self.network.get_parameters(),  # type: ignore
+            self.network.get_parameterized_gradients(),  # type: ignore
             self.velocities,
         ):
             self._update_rule(

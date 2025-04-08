@@ -44,14 +44,14 @@ class Trainer:
     ) -> None:
         """Fits the neural network to the training data.
 
-        :parameter x_train: The features training data.
-            :type x_train: :class:`ndarray`
-        :parameter x_valid: The features validating data.
-            :type x_valid: :class:`ndarray`
-        :parameter y_train: The target training data.
-            :type y_train: :class:`ndarray`
-        :parameter y_valid: The target validating data.
-            :type y_valid: :class:`ndarray`
+        :param x_train: The features training data.
+            :type x_train: :class:`NDArray`
+        :param x_valid: The features validating data.
+            :type x_valid: :class:`NDArray`
+        :param y_train: The target training data.
+            :type y_train: :class:`NDArray`
+        :param y_valid: The target validating data.
+            :type y_valid: :class:`NDArray`
 
         :keyword epochs: The number of training epochs.
             :type epochs: :class:`int`

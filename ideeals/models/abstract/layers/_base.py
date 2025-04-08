@@ -43,11 +43,11 @@ class BaseLayer(ABC):
         """Passes the input forward through the layer and returns the
         output.
 
-        :parameter input_: The input to the layer.
-            :type input_: :class:`ndarray`
+        :param input_: The input to the layer.
+            :type input_: :class:`NDArray`
 
         :returns: The output of the layer.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         if self.root:
             self._setup_layer(input_.shape[1])
@@ -63,11 +63,11 @@ class BaseLayer(ABC):
         """Propagates the output gradients backward through the layer and
         returns the input gradients.
 
-        :parameter output_gradients: The gradients of the output.
-            :type output_gradients: :class:`ndarray`
+        :param output_gradients: The gradients of the output.
+            :type output_gradients: :class:`NDArray`
 
         :returns: The gradients of the input.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         input_gradients = output_gradients
         for operator in reversed(self.operators.values()):
@@ -87,7 +87,7 @@ class BaseLayer(ABC):
         ):
             if issubclass(type(operator), ParameterizedOperator):
                 self.parameters_gradients[key] = (
-                    operator.parameterized_gradient  # pyright: ignore[reportAttributeAccessIssue]
+                    operator.parameterized_gradient  # type: ignore
                 )
 
     def _get_parameters(self) -> None:
@@ -109,7 +109,7 @@ class BaseLayer(ABC):
                 scale = 2 / (n_features + self.n_neurons)
             case _:
                 message = (
-                    f"Invalid weight initialization: "
+                    "Invalid weight initialization: "
                     f"{self.weight_initialization}"
                 )
                 raise ValueError(message)

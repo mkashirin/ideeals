@@ -25,10 +25,10 @@ class ImputingPreprocessor(BasePreprocessor):
         """Fit the preprocessor on the given x and compute the specified
         statistics for each feature.
 
-        :parameter x: The input features which statistics would be used for
+        :param x: The input features which statistics would be used for
         imputing.
-            :type x: :class:`ndarray`
-        :parameter fill_with: The object to fill missing values with,
+            :type x: :class:`NDArray`
+        :param fill_with: The object to fill missing values with,
         works when strategy is set to "constant".
             :type fill_with: :class:`Any`
 
@@ -55,11 +55,11 @@ class ImputingPreprocessor(BasePreprocessor):
         """Transform the input features using statistics, calculated with the
         :method:`fit()` method.
 
-        :parameter x: The input x to be imputed.
-            :type x: :class:`ndarray`
+        :param x: The input x to be imputed.
+            :type x: :class:`NDArray`
 
         :returns: The x imputed.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         if self.copy:
             x = x.copy()
@@ -90,9 +90,9 @@ class MMScalingPreprocessor(BasePreprocessor):
         """Fit the preprocessor to the input x and computes the (min, max)
         boundaries for each feature.
 
-        :parameter x: The features to fit the preprocessor and compute the
+        :param x: The features to fit the preprocessor and compute the
         boundaries.
-            :type x: ndarray
+            :type x: NDArray
 
         :returns: :data:`None`
             :rtype: :class:`NoneType`
@@ -104,11 +104,11 @@ class MMScalingPreprocessor(BasePreprocessor):
         """Transform the input features and scale the data according to the
         computed boundaries.
 
-        :parameter x: Features to scale and transform.
-            :type x: :class:`ndarray`
+        :param x: Features to scale and transform.
+            :type x: :class:`NDArray`
 
         :return: Scaled features.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         if self.copy:
             x = x.copy()
@@ -149,9 +149,9 @@ class ZScalingPreprocessor(BasePreprocessor):
         """Fit the preprocessor to the input x and computes the mean and
         standard deviation for each feature.
 
-        :parameter x: The features to fit the preprocessor and compute the
+        :param x: The features to fit the preprocessor and compute the
         statistics.
-            :type x: :class:`ndarray`
+            :type x: :class:`NDArray`
         """
         self.means = np.nanmean(x, axis=0)
         self.stds = np.nanstd(x, axis=0)
@@ -160,11 +160,11 @@ class ZScalingPreprocessor(BasePreprocessor):
         """Transform the input features and standard scale the data according
         to the computed mean and standard deviation.
 
-        :parameter x: Features to scale and transform.
-            :type x: :class:`ndarray`
+        :param x: Features to scale and transform.
+            :type x: :class:`NDArray`
 
         :return: Standard scaled features.
-            :rtype: :class:`ndarray`
+            :rtype: :class:`NDArray`
         """
         if self.copy:
             x = x.copy()

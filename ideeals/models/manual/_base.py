@@ -16,7 +16,7 @@ class BaseManualModel(ABC):
     @abstractmethod
     def fit(self, x_train: NDArray, y_train: NDArray, *args, **kwargs) -> None:
         """The data passed to this method would be copied and used as
-        NumPy :class:`ndarray`.
+        NumPy :class:`NDArray`.
         """
         self.x_train, self.y_train = x_train, y_train
 
