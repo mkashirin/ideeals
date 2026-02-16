@@ -16,9 +16,9 @@ examples = [
     "pandas>=2.2.3",
 ]
 dev = [
-    "basedpyright>=1.28.4",
     "pyment>=0.3.3",
     "ruff>=0.8.4",
+    "ty>=0.0.17",
 ]
 
 [build-system]

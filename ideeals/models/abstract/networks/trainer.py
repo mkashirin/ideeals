@@ -27,12 +27,11 @@ class Trainer:
         self.y_valid: NDArray
         basicConfig(format="Trainer: %(message)s", level=INFO)
 
+    # fmt: off
     def fit(
         self,
-        x_train: NDArray,
-        x_valid: NDArray,
-        y_train: NDArray,
-        y_valid: NDArray,
+        x_train: NDArray, x_valid: NDArray,
+        y_train: NDArray, y_valid: NDArray,
         *,
         epochs: int = 100,
         evaluate_every_epochs: int = 10,
@@ -42,6 +41,7 @@ class Trainer:
         evaluate_every_batches: Optional[int] = None,
         random_seed: Optional[int] = None,
     ) -> None:
+    # fmt: on
         """Fits the neural network to the training data.
 
         :param x_train: The features training data.
