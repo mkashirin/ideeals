@@ -1,6 +1,11 @@
 from typing import Optional
 
-import numpy as np
+import importlib
+
+try:
+    import cupy as cb
+except ModuleNotFoundError:
+    import numpy as cb
 from numpy.typing import NDArray
 
 from ._base import BaseSolver
@@ -70,7 +75,7 @@ class GaussianEliminationBaseSolver(BaseSolver):
         rows = len(self.scalars_vector)
         index = rows - 1
         iteration = 0
-        self.solution_vector = np.zeros(rows)
+        self.solution_vector = cb.zeros(rows)
 
         while iteration < rows:
             self._apply_partial_pivoting(iteration, rows)

@@ -1,3 +1,4 @@
+# unresolved-import = false
 from .algebra import *
 from .metrics import (
     compute_mean_absolute_error,

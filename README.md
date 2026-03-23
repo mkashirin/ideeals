@@ -1,8 +1,8 @@
 <h1 align="center">Ideeals</h1>
 
 <p align="center">
-Ideeals (Inside Deep Learning Algorithms) is a project that is inspired by the "Deep Learning from
-Scratch" book by Seth Weidman, which provides a comprehensive guide to creating deep learning
+Ideeals (In-depth Deep Learning Algorithms) is a project that is inspired by the "Deep Learning
+from Scratch" book by Seth Weidman, which provides a comprehensive guide to creating deep learning
 models from scratch using Python, NumPy and SciPy. The project aims to provide pure NumPy
 implementations of classic machine learning algorithms such as k-nearest neighbors, linear and
 multiple regressions, and elementary and convolutional neural networks.

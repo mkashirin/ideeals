@@ -3,10 +3,11 @@ name = "ideeals"
 version = "1.0.0"
 description = "Pure NumPy implementations of classic ML and DL algorithms."
 readme = "README.md"
-requires-python = ">=3.12"
+requires-python = ">=3.11"
 dependencies = [
-    "numpy>=2.2.1",
-    "scipy>=1.14.1",
+    "cupy>=14.0.1; sys_platform != 'darwin'",
+    "numpy>=2.4.2",
+    "scipy>=1.17.0",
 ]
 
 [dependency-groups]
@@ -31,4 +32,7 @@ include = ["examples"]
 
 [tool.ruff.lint]
 ignore = ["F401", "F403"]
+
+[tool.ty.rules]
+"unresolved-import" = "ignore"
 

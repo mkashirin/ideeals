@@ -6,3 +6,6 @@ __pycache__
 
 # Full sized datasets
 examples/datasets/*.csv
+
+# Virtual environments
+.venv
